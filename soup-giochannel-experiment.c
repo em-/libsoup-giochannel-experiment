@@ -111,7 +111,6 @@ http_server_cb (SoupServerContext *context,
 {
   GIOChannel *channel = user_data;
   const SoupUri *uri = soup_message_get_uri (msg);
-  const gchar *accept_encoding;
 
   if (context->method_id != SOUP_METHOD_ID_GET)
     {
