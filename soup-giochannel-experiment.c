@@ -27,7 +27,6 @@
 #include <libsoup/soup-server.h>
 #include <libsoup/soup-server-message.h>
 
-static guint w = 0;
 static GMainLoop *loop;
 
 /*
@@ -58,7 +57,6 @@ input_channel_readable_cb (GIOChannel *source,
               buff, bytes_read);
           soup_message_io_unpause (msg);
           g_printerr ("WRITTEN %d bytes\n", bytes_read);
-          w = 0;
           return FALSE;
         case G_IO_STATUS_AGAIN:
           g_printerr ("AGAIN\n");
@@ -96,8 +94,7 @@ http_server_wrote_chunk_cb (SoupMessage *msg,
   g_printerr ("WROTE CHUNK, add watch on %p\n", channel);
   if (channel)
     {
-      //g_assert (!w);
-      w = g_io_add_watch (channel, G_IO_IN | G_IO_HUP,
+      g_io_add_watch (channel, G_IO_IN | G_IO_HUP,
           input_channel_readable_cb, msg);
     }
 }
