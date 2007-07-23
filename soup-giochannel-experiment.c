@@ -143,6 +143,7 @@ main (int argc, char *argv[])
   loop = g_main_loop_new(NULL, FALSE);
 
   channel = g_io_channel_unix_new (0);
+  g_io_channel_set_encoding (channel, NULL, NULL);
 
   server = soup_server_new(SOUP_SERVER_PORT, 3333, NULL);
 
