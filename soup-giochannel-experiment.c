@@ -58,10 +58,8 @@ input_channel_readable_cb (GIOChannel *source,
               buff, bytes_read);
           soup_message_io_unpause (msg);
           g_printerr ("WRITTEN %d bytes\n", bytes_read);
-          if (w)
-            g_source_remove (w);
           w = 0;
-          return TRUE;
+          return FALSE;
         case G_IO_STATUS_AGAIN:
           g_printerr ("AGAIN\n");
           g_free (buff);
