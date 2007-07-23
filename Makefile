@@ -11,3 +11,13 @@ soup-giochannel-experiment: soup-giochannel-experiment.o
 
 %.o: %.c
 	$(CC) $(CFLAGS) $<
+
+test-file.orig:
+	dd if=/dev/urandom of=$@ count=10378 bs=1k
+
+run: soup-giochannel-experiment test-file.orig
+	cat test-file.orig | ./soup-giochannel-experiment &
+	curl http://localhost:3333/test > test-file
+	cmp test-file.orig test-file
+
+.PHONY: run
