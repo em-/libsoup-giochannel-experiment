@@ -42,7 +42,7 @@ input_channel_readable_cb (GIOChannel *source,
   gchar *buff;
   gsize bytes_read;
 
-#define BUFF_SIZE 32
+#define BUFF_SIZE 65536
   g_printerr ("INPUT READABLE\n");
 
   if (condition & G_IO_IN)
