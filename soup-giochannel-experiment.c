@@ -55,8 +55,9 @@ input_channel_readable_cb (GIOChannel *source,
         case G_IO_STATUS_NORMAL:
           soup_message_add_chunk (msg, SOUP_BUFFER_SYSTEM_OWNED,
               buff, bytes_read);
+          g_printerr ("CHUNK ADDED %d bytes\n", bytes_read);
           soup_message_io_unpause (msg);
-          g_printerr ("WRITTEN %d bytes\n", bytes_read);
+          g_printerr ("CHUNK SENT\n");
           return FALSE;
         case G_IO_STATUS_AGAIN:
           g_printerr ("AGAIN\n");
@@ -76,9 +77,10 @@ input_channel_readable_cb (GIOChannel *source,
 #undef BUFF_SIZE
 
 stop:
-  g_printerr ("\nSTOP!\n\n");
+  g_printerr ("FINISHING TRANSFER\n");
   soup_message_add_final_chunk (msg);
   soup_message_io_unpause (msg);
+  g_printerr ("FINISHED\n");
 
   g_main_loop_quit (loop);
 
